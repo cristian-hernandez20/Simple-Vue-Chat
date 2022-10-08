@@ -1,15 +1,15 @@
 <template>
   <div class="container-join">
     <form class="join-form" novalidate @submit.prevent="joinToChat">
-      <h2 class="page-start">Witaj w aplikacji czat</h2>
+      <h2 class="page-start">Bienvenido a la aplicación de chat</h2>
       <div class="join-box">
-        <label for="form-label" class="form-label">Podaj swój nick</label>
+        <label for="form-label" class="form-label"> Ingresa tu alias</label>
         <input
           class="form-input input"
           id="form-label"
           type="text"
           :value="username"
-          placeholder="Podaj swój nick"
+          placeholder=" Ingresa tu alias"
           autocomplete="off"
           @input="(event) => $emit('update:username', event.target.value)"
         />
@@ -17,7 +17,10 @@
           {{ errorLoginMsg }}
         </div>
       </div>
-      <button class="btn form-button" type="submit">Dołącz</button>
+
+      <button class="btn form-button" @click="show()" type="submit">
+        Unirse
+      </button>
     </form>
   </div>
 </template>
@@ -35,6 +38,11 @@ export default {
     errorLoginMsg: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    show() {
+      console.log('username')
     },
   },
 }

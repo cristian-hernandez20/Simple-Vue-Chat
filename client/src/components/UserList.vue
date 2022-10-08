@@ -1,6 +1,6 @@
 <template>
   <div class="users-box" :class="[isPreview ? 'none' : '']">
-    <h3 class="users-headline">Użytkownicy Online:</h3>
+    <h3 class="users-headline">Usuarios en línea:</h3>
     <ul class="users-list" v-for="u in users" :key="u.id">
       <li class="user-list-item">{{ u.username }}</li>
     </ul>

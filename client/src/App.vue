@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="page-headline">Czat Lite</h1>
+    <h1 class="page-headline">Chat ligero</h1>
     <!-- Responsive toggle switch -->
     <div class="switch-box" v-if="isReady">
       <ul class="switch-list">
@@ -9,14 +9,14 @@
           :class="{ selected: selected === 0 }"
           @click="changeSelected(0), (isPreview = false)"
         >
-          Użytkownicy
+          Usuarios
         </li>
         <li
           class="list-item"
           :class="{ selected: selected === 1 }"
           @click="changeSelected(1), (isPreview = true)"
         >
-          Czat
+          Charlar
         </li>
       </ul>
     </div>
@@ -24,7 +24,7 @@
 
     <JoinUserComponent
       v-if="!isReady"
-      v-model:username="username"
+      :username="username"
       @submit="joinToChat"
       :errorLoginMsg="errorLoginMsg"
     />
@@ -37,7 +37,7 @@
         :isTyping="isTyping"
         :userId="userId"
         :errorSendMsg="errorSendMsg"
-        v-model:message="message"
+        :message="message"
         @submit="sendMessage"
       />
     </div>
@@ -60,11 +60,12 @@ export default {
     ChatBoxComponent,
   },
   setup() {
-    const socket = io('http://192.168.0.30:3000')
+    const socket = io('http://localhost:3000')
     const users = ref([])
     const messages = ref([])
     const message = ref('')
     const username = ref('')
+
     const selected = ref(0)
 
     let isReady = ref(false)
@@ -88,6 +89,7 @@ export default {
     })
 
     socket.on('userConnected', (username) => {
+      console.log(username)
       console.log(`${username} has joined`)
     })
 
@@ -119,8 +121,10 @@ export default {
     //*****Join User to Chat************
 
     const joinToChat = () => {
-      if (/^(([a-zA-Z0-9]{3,}))+$/.test(username.value) == false) {
-        errorLoginMsg.value = 'Użuj minimum 3 liter lub cyfr'
+      console.log('Hello', username.value)
+      if (!username.value) {
+        // username.value = 'Cristian'
+        errorLoginMsg.value = 'No hay usuario'
       } else {
         socket.emit('enterUsername', { username: username.value })
         username.value = ''
@@ -132,8 +136,9 @@ export default {
     /*********Send New Message******** */
 
     const sendMessage = () => {
+      console.log(message)
       if (message.value == '') {
-        errorSendMsg.value = 'Pole nie może być puste'
+        errorSendMsg.value = 'No puedes enviar campos vacios'
       } else {
         socket.emit('newMessage', {
           username: username.value,

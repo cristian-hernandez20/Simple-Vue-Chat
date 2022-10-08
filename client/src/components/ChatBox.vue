@@ -25,19 +25,20 @@
           </div>
         </div>
         <small class="message-is-typing" v-if="isTyping">
-          {{ isTyping }} coś pisze ...
+          {{ isTyping }}
+          escribiendo algo ...
         </small>
       </div>
     </div>
     <form class="send-form" novalidate @submit.prevent="$emit('sendMessage')">
       <div class="send-box">
-        <label for="form-label" class="form-label">Napisz wiadomość</label>
+        <label for="form-label" class="form-label">Escribe un mensaje</label>
         <input
           type="text"
           class="send-input input"
           :value="message"
           autocomplete="off"
-          placeholder="Npaisz wiadomość"
+          placeholder="escribe tu mensaje"
           @input="(event) => $emit('update:message', event.target.value)"
         />
         <div v-if="errorSendMsg" class="error-message">
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div class="btn-box">
-        <button class="btn send-button" type="submit">Wyślij</button>
+        <button class="btn send-button" type="submit">Enviar</button>
       </div>
     </form>
   </div>
